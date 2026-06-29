@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { type Recipe } from '~/types/types';
+
+definePageMeta({
+    middleware:"auth"
+})
+
+
 const {id} = useRoute().params;
 const {data,error} = await useFetch<Recipe>(`https://dummyjson.com/recipes/${id}`);
 if (error.value){

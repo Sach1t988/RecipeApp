@@ -5,7 +5,17 @@ definePageMeta({
 import {type RecipeResponse } from "../types/types";
 const {logout} = useAuth()
 
-const {data , error} = await useFetch<RecipeResponse>("https://dummyjson.com/recipes?limit=12");
+const limit = 12
+const page = ref(1)
+
+const skip = computed (()=>{
+    return (page.value-1) * limit
+})
+
+const { data, error } = await useFetch<RecipeResponse>(() =>
+  `https://dummyjson.com/recipes?limit=${limit}&skip=${skip.value}`
+)
+
 </script>
 <template>
     <main>
@@ -62,6 +72,60 @@ const {data , error} = await useFetch<RecipeResponse>("https://dummyjson.com/rec
           </div>
         </div>
       </div>
+      <div class="flex justify-center gap-3 mt-10">
+
+  <button
+    @click="page = 1"
+    class="w-10 h-10 bg-black text-white rounded-md
+           hover:bg-zinc-800
+           transition-all duration-200
+           active:scale-95"
+  >
+    1
+  </button>
+
+  <button
+    @click="page   = 2"
+    class="w-10 h-10 bg-black text-white rounded-md
+           hover:bg-zinc-800
+           transition-all duration-200
+           active:scale-95"
+  >
+    2
+  </button>
+
+  <button
+    @click="page = 3"
+    class="w-10 h-10 bg-black text-white rounded-md
+           hover:bg-zinc-800
+           transition-all duration-200
+           active:scale-95"
+  >
+    3
+  </button>
+  <button
+    @click="page = 4"
+    class="w-10 h-10 bg-black text-white rounded-md
+           hover:bg-zinc-800
+           transition-all duration-200
+           active:scale-95"
+  >
+  4
+  </button>
+  <button
+    @click="page = 5"
+    class="w-10 h-10 bg-black text-white rounded-md
+           hover:bg-zinc-800
+           transition-all duration-200
+           active:scale-95"
+  >
+    5
+  </button>
+
+</div>
+<br><br>
+
+  
       <div class="m-8 flex justify-center">
  <button type="submit" 
         @click="logout"
